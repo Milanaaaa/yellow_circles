@@ -3,14 +3,14 @@ import random
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QColor, QPen
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication
+from UI import Ui_MainWindow
 
 
-class MainWindow(QMainWindow):
+class MainWindow(Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.do_paint = False
         self.diam = 10
         self.pb.clicked.connect(self.paint)
@@ -27,9 +27,10 @@ class MainWindow(QMainWindow):
             qp.end()
 
     def draw_face(self, qp):
-        pen = QPen(Qt.yellow)
-        qp.setPen(pen)
         for i in range(random.randint(2, 15)):
+            pen = QPen(Qt.yellow)
+            pen.setColor(QColor(random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+            qp.setPen(pen)
             diam = random.randint(20, 50)
             qp.drawEllipse(random.randint(20, 620), random.randint(20, 520), diam, diam)
 
